@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+ 	<head>
+ 	</head>
+	<body>
+		<div id="app"><h1>SOUND HOCKEY!</h1>
+	  		<select v-model='waveSelect'>
+	  			<option>sine</option>
+	  			<option>sawtooth</option>
+	  			<option>square</option>
+	  		</select>
+	      	<select v-model='unitSelect'>
+		        <option>oscillator</option>
+		        <option>audioSample</option>
+		        <option>SFX</option>
+		      </select>
+	       <span>X : <input id="xpos" type='text' v-model='xPos' /></span>
+	       <span>Y : <input id="ypos" type='text' v-model='yPos' /></span>
+	       <span>Frequency : <input id="freq" type='text' v-model='freq' /></span>
+	       <button id='addBall'>Add New Ball!</button>
+	    </div>
+		<script src="bundle.js"></script>
+  </body>
+</html>
