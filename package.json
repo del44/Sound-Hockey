@@ -1,7 +1,7 @@
 {
-  "name": "phaserTest",
-  "version": "1.0.0",
-  "main": "index.js",
+  "name": "Sound-Hockey",
+  "version": "0.0.3",
+  "main": "./scripts/main.js",
   "license": "MIT",
   "scripts": {
     "start": "webpack-dev-server --inline --content-base --hot"
