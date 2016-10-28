@@ -1,8 +1,9 @@
 import Phaser from 'phaser';
 import Tone from 'tone';
-import {controllerBall,waveGen} from './ball.js';
+import {controllerBall,waveGen,audioSample} from './ball.js';
 import CB from './callbacks.js';
-
+ var freeverb = new Tone.Freeverb().toMaster();
+ var connected = false;
 export default class extends Phaser.State {
 
 	init(){}
@@ -29,8 +30,24 @@ export default class extends Phaser.State {
     	game.myCollisionGroup = game.physics.p2.createCollisionGroup();
     	game.addButton = document.getElementById('addBall');
     	game.addButton.onclick = CB.addNewBall;
-    	new controllerBall();
+    	game.con = new controllerBall(360,360);
+    	game.wav = new audioSample(450,450);
 	}
 
-	update(){}
+	update(){
+		if(game.con.circle.distance(game.wav)<194){
+			if(!connected){
+				game.wav.sample.connect(freeverb);
+				connected = true;
+			}
+		}
+			
+		else{
+			if(connected){
+				game.wav.sample.disconnect().toMaster();
+				connected = false;
+			}
+			
+		}
+	}
 }

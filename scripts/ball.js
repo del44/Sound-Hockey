@@ -25,8 +25,21 @@ class Ball extends Phaser.Sprite{
 
 class controllerBall extends Ball {
 	constructor(x,y){
-		super(200,200,'ball');
+		super(x || 480,y || 320,'ball');
+		this.circle = new Phaser.Circle(x, y, 300);
+	//	this.contains();
 	}
+
+	drawCircle(){
+		var x = this.centerX;
+		var y = this.centerY;
+		this.circle = new Phaser.Circle(x, y, 300);
+	//	game.input.mousePointer.x,game.input.mousePointer.y
+	//	console.log(this.circle.contains(game.input.mousePointer.x,game.input.mousePointer.y));
+	//	console.log(game.input.mousePointer.x,game.input.mousePointer.y);
+	//	console.log(this.circle.contains(this.circle,game.input.mousePointer.x,game.input.mousePointer.y));
+	}
+
 	update(){
 		this.body.setZeroVelocity();
 
@@ -47,7 +60,11 @@ class controllerBall extends Ball {
 	    {
 	    	this.body.moveDown(400);
 	    }
+
+	   this.drawCircle();
 	}
+
+
 
 }
 
@@ -79,7 +96,7 @@ class audioSample extends Ball {
 	}
 
 	update(){
-		if(this.body.velocity.x > 0){
+		if(Math.abs(this.body.velocity.x) > 0){
 			if(this.sample.state === 'stopped'){
 				this.sample.start();
 			}
