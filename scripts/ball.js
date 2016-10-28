@@ -30,15 +30,23 @@ class controllerBall extends Ball {
 	//	this.contains();
 	}
 
-	drawCircle(){
-		var x = this.centerX;
-		var y = this.centerY;
-		this.circle = new Phaser.Circle(x, y, 300);
-	//	game.input.mousePointer.x,game.input.mousePointer.y
-	//	console.log(this.circle.contains(game.input.mousePointer.x,game.input.mousePointer.y));
-	//	console.log(game.input.mousePointer.x,game.input.mousePointer.y);
-	//	console.log(this.circle.contains(this.circle,game.input.mousePointer.x,game.input.mousePointer.y));
-	}
+	distanceWith(obj){
+		var thisX = this.centerX;
+		var thisY = this.centerY;
+		var dx = thisX - obj.x;
+		var dy = thisY - obj.y;
+		return Math.sqrt(dx * dx + dy * dy);
+}
+
+	// drawCircle(){
+	// 	var x = this.centerX;
+	// 	var y = this.centerY;
+	// 	this.circle = new Phaser.Circle(x, y, 300);
+	// //	game.input.mousePointer.x,game.input.mousePointer.y
+	// //	console.log(this.circle.contains(game.input.mousePointer.x,game.input.mousePointer.y));
+	// //	console.log(game.input.mousePointer.x,game.input.mousePointer.y);
+	// //	console.log(this.circle.contains(this.circle,game.input.mousePointer.x,game.input.mousePointer.y));
+	// }
 
 	update(){
 		this.body.setZeroVelocity();
@@ -61,7 +69,7 @@ class controllerBall extends Ball {
 	    	this.body.moveDown(400);
 	    }
 
-	   this.drawCircle();
+	//   this.drawCircle();
 	}
 
 

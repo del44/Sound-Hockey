@@ -35,7 +35,7 @@ export default class extends Phaser.State {
 	}
 
 	update(){
-		if(game.con.circle.distance(game.wav)<194){
+		if(game.con.distanceWith(game.wav)<194){
 			if(!connected){
 				game.wav.sample.connect(freeverb);
 				connected = true;
