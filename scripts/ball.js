@@ -27,26 +27,7 @@ class controllerBall extends Ball {
 	constructor(x,y){
 		super(x || 480,y || 320,'ball');
 		this.circle = new Phaser.Circle(x, y, 300);
-	//	this.contains();
 	}
-
-	distanceWith(obj){
-		var thisX = this.centerX;
-		var thisY = this.centerY;
-		var dx = thisX - obj.x;
-		var dy = thisY - obj.y;
-		return Math.sqrt(dx * dx + dy * dy);
-}
-
-	// drawCircle(){
-	// 	var x = this.centerX;
-	// 	var y = this.centerY;
-	// 	this.circle = new Phaser.Circle(x, y, 300);
-	// //	game.input.mousePointer.x,game.input.mousePointer.y
-	// //	console.log(this.circle.contains(game.input.mousePointer.x,game.input.mousePointer.y));
-	// //	console.log(game.input.mousePointer.x,game.input.mousePointer.y);
-	// //	console.log(this.circle.contains(this.circle,game.input.mousePointer.x,game.input.mousePointer.y));
-	// }
 
 	update(){
 		this.body.setZeroVelocity();
@@ -68,12 +49,7 @@ class controllerBall extends Ball {
 	    {
 	    	this.body.moveDown(400);
 	    }
-
-	//   this.drawCircle();
 	}
-
-
-
 }
 
 class waveGen extends Ball{
@@ -115,4 +91,20 @@ class audioSample extends Ball {
 	}
 }
 
-export {controllerBall,waveGen,audioSample};
+class SFX extends Ball {
+	constructor(x,y){
+		super(x,y,'ball_green');
+		this.effect = new Tone.Freeverb().toMaster();
+		this.connected = false;
+	}
+
+	distanceWith(obj){
+		var thisX = this.centerX;
+		var thisY = this.centerY;
+		var dx = thisX - obj.x;
+		var dy = thisY - obj.y;
+		return Math.sqrt(dx * dx + dy * dy);
+	}
+}
+
+export {controllerBall,waveGen,audioSample,SFX};
