@@ -80,7 +80,7 @@ class audioSample extends Ball {
 	}
 
 	update(){
-		if(Math.abs(this.body.velocity.x) > 0){
+		if(Math.abs(this.body.velocity.x) > 1){
 			if(this.sample.state === 'stopped'){
 				this.sample.start();
 			}
@@ -96,6 +96,21 @@ class SFX extends Ball {
 		super(x,y,'ball_green');
 		this.effect = new Tone.Freeverb().toMaster();
 		this.connected = false;
+		this.graphics = game.add.graphics(game.world.centerX, game.world.centerY);
+		this.graphics.lineStyle(3, 0xffd900);
+		//	this.graphics.clear();
+		this.circle = this.graphics.arc(0, 0, 180, 0, Math.PI * 2, false);
+	//	this.graphics.moveTo(this.centerX+100,this.centerY-100);
+		
+
+		
+	//	
+		
+	}
+
+	update(){
+		this.circle.position.x = this.centerX;
+		this.circle.position.y = this.centerY;
 	}
 
 	distanceWith(obj){

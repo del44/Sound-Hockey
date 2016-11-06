@@ -23,23 +23,29 @@ export default class extends Phaser.State {
 	    game.physics.p2.restitution = 1;    //  Make things a bit more bouncey
 	    game.add.text(20, 20, 'move the ball with arrow keys!', { fill: '#ffffff' });
 
+
 	    game.cursors = game.input.keyboard.createCursorKeys();
     	game.mouse = game.input.mouse;
     	game.myCollisionGroup = game.physics.p2.createCollisionGroup();
     	game.addButton = document.getElementById('addBall');
     	game.addButton.onclick = CB.addNewBall;
+    //	game.graphics = game.add.graphics(game.world.centerX, game.world.centerY);
     	game.con = new controllerBall(360,360);
-    	game.wav = new audioSample(450,450);
+    	game.wav = new audioSample(200,200);
     	game.sfx = new SFX(500,500);
+   
 	}
 
 	update(){
-		if(game.sfx.distanceWith(game.wav)<194){
-			if(!game.sfx.connected){
+		var distance = game.sfx.distanceWith(game.wav);
+		if(distance < 250){
+			if(!game.sfx.connected){ 
 				game.wav.sample.connect(game.sfx.effect);
 				game.sfx.connected = true;
 			}
+			game.sfx.effect.wet.value = -0.00617 * distance + 1.5432;
 		}
+
 			
 		else{
 			if(game.sfx.connected){
