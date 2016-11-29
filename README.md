@@ -11,9 +11,7 @@
 ## Setup
 
 1. Make sure you have npm or yarn installed on your computer
-2. ``` bash 
-npm install ```or 
-```yarn```
+2. `npm install` or `yarn`
 
 ## Run
-npm run start or yarn run start
+`npm start` or `yarn start`
