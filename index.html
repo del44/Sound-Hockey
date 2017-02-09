@@ -3,21 +3,21 @@
  	<head>
  	</head>
 	<body>
-		<div id="app"><h1>SOUND HOCKEY!</h1>
-	  		<select v-model='waveSelect'>
-	  			<option>sine</option>
-	  			<option>sawtooth</option>
-	  			<option>square</option>
+		<div id="app">
+			<h1>SOUND HOCKEY!</h1>
+			<audio-block></audio-block>
+	  		<!-- <select v-model='synthSelect'>
+	  			<option>MembraneSynth</option>
+	  			<option>FMSynth</option>
 	  		</select>
-	      	<select v-model='unitSelect'>
-		        <option>oscillator</option>
-		        <option>audioSample</option>
-		        <option>SFX</option>
-		      </select>
-	       <span>X : <input id="xpos" type='text' v-model='xPos' /></span>
-	       <span>Y : <input id="ypos" type='text' v-model='yPos' /></span>
-	       <span>Frequency : <input id="freq" type='text' v-model='freq' /></span>
-	       <button id='addBall'>Add New Ball!</button>
+			
+			<span v-for="param in synthParams">
+				<span>{{param}}</span>
+				<input type="checkbox" v-bind:id="param" v-bind:value="param" v-model="checkedParams" />
+			</span>
+			<button v-on:click='addNewBall'>Confirm</button>
+			<br /> -->
+			<!-- <button v-on:click='triggerSound'>Trigger</button> -->
 	    </div>
 		<script src="bundle.js"></script>
   </body>

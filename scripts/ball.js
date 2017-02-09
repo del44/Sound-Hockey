@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 import Tone from 'tone';
 import CB from './callbacks.js';
 import appData from './data.js';
-
+//Sprite.body.damping 用来控制摩擦力！！！！
 class Ball extends Phaser.Sprite{
 	constructor( x, y, balltype){
 		super(game, appData.x || x || 480, appData.y || y || 320, balltype);
@@ -11,26 +11,35 @@ class Ball extends Phaser.Sprite{
 	    this.body.loadPolygon("ball_physics", "ball");
 	    this.body.collideWorldBounds = true;
 	    this.body.setCollisionGroup(game.myCollisionGroup);
-	    this.body.collides(game.myCollisionGroup,CB.collision);
+	    this.body.collides(game.myCollisionGroup);
 	    this.body.fixedRotation = true;
 	    this.inputEnabled = true;
 	    game.add.existing(this);
 	    this.events.onInputDown.add(CB.handleClick.bind(this),this);
+	//    this.body.damping = 0;
 	}
-
 	update(){
 
 	}
 }
 
 class controllerBall extends Ball {
-	constructor(x,y){
-		super(x || 480,y || 320,'ball');
-		this.circle = new Phaser.Circle(x, y, 300);
+	constructor(x = 480,y = 320){
+		super(x, y, 'ball');
+		// this.text = game.add.text(this.left ,this.centerY-5,"controller ball",{
+		// 	font: "15px Arial",
+		// //	align : 'center',
+		// //	wordWrap: true, 
+		// //	wordWrapWidth: 30
+		// //	align : 'center'
+		// });
+	//	this.addChild(text);
 	}
 
 	update(){
 		this.body.setZeroVelocity();
+		// this.text.x = this.left;
+		// this.text.y = this.centerY-5;
 
 	    if (game.cursors.left.isDown)
 	    {
@@ -54,12 +63,22 @@ class controllerBall extends Ball {
 
 class waveGen extends Ball{
 	
-	constructor(x,y,freq,waveSelect){
+	constructor(x,y,freq, waveSelect){
 		super(x,y,'ball_green');
-		this.osc = new Tone.Oscillator(freq || 440, waveSelect || 'sine').toMaster();
+		this.osc = new Tone.Oscillator(freq || 440, waveSelect).toMaster();
+		this.text = game.add.text(this.left ,this.centerY-5,"osc\n" + waveSelect + "\n" + freq,{
+			font: "15px Arial",
+			align : 'center',
+			wordWrap: true, 
+			wordWrapWidth: 30
+		//	align : 'center'
+		});
+		console.log(this.text);
 	}
 
 	update(){
+		this.text.x = this.left;
+		this.text.y = this.centerY-5;
 		if(this.body.velocity.x > 0){
 			if(this.osc.state === 'stopped'){
 				this.osc.start();
@@ -73,9 +92,9 @@ class waveGen extends Ball{
 }
 
 class audioSample extends Ball {
-	constructor(x,y){
+	constructor(x,y,sample){
 		super(x,y,'ball_black');
-		this.sample = new Tone.Player('./sounds/kick-drum.wav').toMaster();
+		this.sample = new Tone.Player(`./sounds/${sample}.wav`).toMaster();
     	this.sample.loop = true;
 	}
 
@@ -92,19 +111,14 @@ class audioSample extends Ball {
 }
 
 class SFX extends Ball {
-	constructor(x,y){
+	constructor(x,y,radius){
 		super(x,y,'ball_green');
 		this.effect = new Tone.Freeverb().toMaster();
 		this.connected = false;
 		this.graphics = game.add.graphics(game.world.centerX, game.world.centerY);
 		this.graphics.lineStyle(3, 0xffd900);
-		//	this.graphics.clear();
-		this.circle = this.graphics.arc(0, 0, 180, 0, Math.PI * 2, false);
-	//	this.graphics.moveTo(this.centerX+100,this.centerY-100);
-		
+		this.circle = this.graphics.arc(0, 0, radius, 0, Math.PI * 2, false);
 
-		
-	//	
 		
 	}
 
@@ -122,4 +136,15 @@ class SFX extends Ball {
 	}
 }
 
-export {controllerBall,waveGen,audioSample,SFX};
+class paramBall extends Ball{
+	constructor(x,y){
+		super(x || 440,y || 360,'ball_green');
+	}
+
+	update(){
+		// Synth.pitchDecay = this.position.x * 0.0078125;
+		// Synth.octaves = this.position.y * 0.03125;
+	}
+}
+
+export {Ball,controllerBall,waveGen,audioSample,SFX,paramBall};
