@@ -16,6 +16,26 @@ class Ball extends Phaser.Sprite{
 	    this.inputEnabled = true;
 	    game.add.existing(this);
 	    this.events.onInputDown.add(CB.handleClick.bind(this),this);
+	    this.lastVelocityX = 0;
+	    this.lastVelocityY = 0;
+	    this.lastAngularVelocity = 0;
+	    this.body.getAccelerationX = () => {
+	    	let temp = this.lastVelocityX;
+	    	this.lastVelocityX = this.body.velocity.x;
+	    	return (this.body.velocity.x - temp) * 60;
+	    };
+	    this.body.getAccelerationY = () => {
+	    	let temp = this.lastVelocityY;
+	    	this.lastVelocityY = this.body.velocity.y;
+	    	return (this.body.velocity.y - temp) * 60;
+	    };
+	    this.body.getAngularAcceleration = () => {
+	    	let temp = this.lastAngularVelocity;
+	    	this.lastAngularVelocity = this.body.angularVelocity;
+	    	return (this.body.angularVelocity - temp) * 60;
+	    }
+
+
 	//    this.body.damping = 0;
 	}
 	update(){
@@ -43,7 +63,7 @@ class controllerBall extends Ball {
 
 	    if (game.cursors.left.isDown)
 	    {
-	    	this.body.moveLeft(1000);
+	    	this.body.moveLeft(400);
 	    }
 	    else if (game.cursors.right.isDown)
 	    {
@@ -60,6 +80,16 @@ class controllerBall extends Ball {
 	    }
 	}
 }
+
+class paramBall extends Ball{
+	constructor(x,y,color){
+		super(x || 440,y || 360, `ball_${color}`);
+	}
+
+	update(){
+	}
+}
+
 
 class waveGen extends Ball{
 	
@@ -136,15 +166,6 @@ class SFX extends Ball {
 	}
 }
 
-class paramBall extends Ball{
-	constructor(x,y){
-		super(x || 440,y || 360,'ball_green');
-	}
 
-	update(){
-		// Synth.pitchDecay = this.position.x * 0.0078125;
-		// Synth.octaves = this.position.y * 0.03125;
-	}
-}
 
 export {Ball,controllerBall,waveGen,audioSample,SFX,paramBall};

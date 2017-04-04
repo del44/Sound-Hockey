@@ -9,6 +9,11 @@ export default class extends Phaser.State {
 		game.load.image('ball', 'assets/ball.png');
 	    game.load.image('ball_green', 'assets/ball_green.png');
 	    game.load.image('ball_black', 'assets/ball_black.png');
+	    game.load.image('ball_blue','assets/ball_blue.png');
+	    game.load.image('ball_cyan','assets/ball_cyan.png');
+	    game.load.image('ball_purple','assets/ball_purple.png');
+	    game.load.image('ball_red','assets/ball_red.png');
+	    game.load.image('ball_yellow','assets/ball_yellow.png');
 	    game.load.physics("ball_physics", "assets/ball.json");
 	}
 
