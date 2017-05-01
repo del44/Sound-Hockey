@@ -19,7 +19,7 @@ export default class extends Phaser.State {
 
 	create(){
 		game.world.setBounds(0, 0, 960, 640);  //   Enable p2 physics
-	    game.stage.backgroundColor = '#ddd';
+	    game.stage.backgroundColor = '#d9dce1';
 		game.physics.startSystem(Phaser.Physics.P2JS);
 	 // game.physics.p2.setBoundsToWorld(true, true, true, true, false);
 	    game.physics.p2.setImpactEvents(true);

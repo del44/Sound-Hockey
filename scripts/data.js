@@ -210,36 +210,42 @@ Vue.component('audio-block',{
             else if(this.typeSelect === 'Synth'){
                 window.player = undefined;
             }
-            this.ball.destroy();
+            if(this.ball) this.ball.destroy();
             //Use this shitty method for now
         }  
     },
-    template : `<div style="display:inline-block">
-                    <select v-model="typeSelect">
-                        <option>Synth</option>
-                        <option>Effect</option>
-                    </select>
-                    <div>
-                        <select v-model="unitSelect" >
+    template : `<div class="audio-unit">
+                    <section>
+                        <select class="basic-select" v-model="typeSelect">
+                            <option>Synth</option>
+                            <option>Effect</option>
+                        </select>
+                        <select class="basic-select"  v-model="unitSelect" >
                             <option v-for="unit in audioUnit">{{unit}}</option> 
                         </select>
-                    </div>
-                    <div>
+                        <select class="basic-select"v-model="color">
+                            <option v-for="color in ballColors">
+                                {{color}}
+                            </option>
+                        </select>
+                    </section>
+
+                    <div style="padding-left:5%;">
                         <span>friction</span>
-                        <input type="text" v-model='friction' />
-                        <br />
-                        <span>initial position x</span>
-                        <input type="text" v-model='position_x' />
-                        <br />
-                        <span>initial position y</span>
-                        <input type="text" v-model='position_y' />
-                        <br />
-                        <span>enableRotate</span>
+                        <input class="input" type="text" v-model='friction' />
+                        
+                        <span>X Position</span>
+                        <input class="input" type="text" v-model='position_x' />
+                        
+                        <span>Y Position</span>
+                        <input class="input" type="text" v-model='position_y' />
+                        
+                        <span style="display:inline-block;margin-top:1%;">enableRotate</span>
                         <input type="checkbox" v-model='enableRotate' />
                     </div>
-                    <section>
+                    <section style="padding:2% 2% 0 8%">
                         <table>
-                            <thead>
+                            <thead id="thead">
                                 <tr>
                                     <td>Music Params</td>
                                     <td>Physics Params</td>
@@ -258,20 +264,17 @@ Vue.component('audio-block',{
                             </tbody>
                         </table>
                     </section>
-                    <select v-model="color">
-                        <option v-for="color in ballColors">
-                            {{color}}
-                        </option>
-                    </select>
-                    <br />
-                    <button v-on:click="addBall">add Ball</button>
-                    <button @click="$emit('delete-unit')">Delete</button>
-                    <button v-on:click='fixBall' v-if="!enableFix">Fix</button>
-                    <button v-on:click='stopFix' v-if="enableFix">Stop Fix</button>
-                    <button v-on:click='startAuto' v-if="!enableAuto">Auto</button>
-                    <button v-on:click='stopAuto' v-if="enableAuto">Stop Auto</button>
-                    <button v-on:click='updateSettings'>Update</button>
-                    <button v-on:click='triggerSound'>Trigger</button>
+                    
+                    <section style="padding-left:12%">
+                        <button v-on:click="addBall">add Ball</button>
+                        <button @click="$emit('delete-unit')">Delete</button>
+                        <button v-on:click='fixBall' v-if="!enableFix">Fix</button>
+                        <button v-on:click='stopFix' v-if="enableFix">Stop Fix</button>
+                        <button v-on:click='startAuto' v-if="!enableAuto">Auto</button>
+                        <button v-on:click='stopAuto' v-if="enableAuto">Stop Auto</button>
+                        <button v-on:click='updateSettings'>Update</button>
+                        
+                    </section>
                 </div>
                     `
                
@@ -285,13 +288,15 @@ var appData = new Vue({
     },
 
     template : `
-                <div>
-                <button v-on:click="addAudioUnit">Add!</button>
-                <span>
-                    <audio-block v-for="(block,index) in audioBlockCount" 
-                    v-on:delete-unit="deleteAudioUnit(index)">
-                    </audio-block>
-                </span>
+                <div id="control-panel" >
+                    <div id="add-button">
+                        <button v-on:click="addAudioUnit">Add A New Ball</button>
+                    </div>
+                    <div class="audio-block-wrapper">
+                        <audio-block v-for="(block,index) in audioBlockCount" 
+                        v-on:delete-unit="deleteAudioUnit(index)">
+                        </audio-block>
+                    </div>
 
                 </div>
                 `,

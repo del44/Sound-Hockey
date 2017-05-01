@@ -8,7 +8,7 @@ import pitch from './pitch.js';
 class Game extends Phaser.Game {
 
   constructor () {
-	super(960, 640, Phaser.CANVAS, 'content', null);
+	super(960, 640, Phaser.CANVAS, 'canvas', null);
     this.state.add('Game', GameState, false);
 	this.state.start('Game');
   }
